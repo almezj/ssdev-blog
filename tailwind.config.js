@@ -4,10 +4,16 @@ module.exports = {
     './resources/css/**/*.css',
   ],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        'primary': '#FCFCFC',
+        'secondary': '#99E1D9',
+        'text': '#5D576B',
+      },
+    },
   },
   variants: {},
   plugins: [
     require('@tailwindcss/ui'),
-  ]
+  ],
 }
