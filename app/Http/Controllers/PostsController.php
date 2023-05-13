@@ -21,16 +21,21 @@ class PostsController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$query = $request->input('query');
 		$selectedTags = $request->input('tags', []);
+		$query = $request->input('query', '');
 
-		$posts = Post::when($query, function ($query, $searchQuery) {
-			$query->where('title', 'like', '%' . $searchQuery . '%')
-				->orWhere('description', 'like', '%' . $searchQuery . '%');
+		$posts = Post::when($selectedTags, function ($query, $selectedTags) {
+			$query->whereHas('tags', function ($query) use ($selectedTags) {
+				$query->whereIn('tags.id', $selectedTags);
+			});
 		})
-			->when($selectedTags, function ($query, $selectedTags) {
-				$query->whereHas('tags', function ($query) use ($selectedTags) {
-					$query->whereIn('tags.id', $selectedTags);
+			->when($query, function ($query, $searchTerm) {
+				$query->where(function ($query) use ($searchTerm) {
+					$query->where('title', 'like', '%' . $searchTerm . '%')
+						->orWhere('description', 'like', '%' . $searchTerm . '%')
+						->orWhereHas('user', function ($query) use ($searchTerm) {
+								$query->where('name', 'like', '%' . $searchTerm . '%');
+							});
 				});
 			})
 			->orderBy('updated_at', 'DESC')
@@ -40,6 +45,7 @@ class PostsController extends Controller
 
 		return view('blog.index', compact('posts', 'tags', 'selectedTags', 'query'));
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -95,7 +101,18 @@ class PostsController extends Controller
 	 */
 	public function show($slug)
 	{
-		return view('blog.show')
+
+		$post = Post::where('slug', $slug)->firstOrFail();
+
+		$relatedPosts = Post::whereHas('tags', function ($query) use ($post) {
+			$query->whereIn('tags.id', $post->tags->pluck('id'));
+		})
+			->where('id', '!=', $post->id)
+			->inRandomOrder()
+			->limit(5)
+			->get();
+
+		return view('blog.show', compact('post', 'relatedPosts'))
 			->with('post', Post::where('slug', $slug)->first());
 	}
 
