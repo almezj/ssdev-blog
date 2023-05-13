@@ -21,19 +21,24 @@ class PostsController extends Controller
 	 */
 	public function index(Request $request)
 	{
-
-		$tags = Tag::all();
+		$query = $request->input('query');
 		$selectedTags = $request->input('tags', []);
 
-		// Retrieve posts filtered by selected tags
-		$posts = Post::when($selectedTags, function ($query) use ($selectedTags) {
-			$query->whereHas('tags', function ($query) use ($selectedTags) {
-				$query->whereIn('id', $selectedTags);
-			});
-		})->get();
+		$posts = Post::when($query, function ($query, $searchQuery) {
+			$query->where('title', 'like', '%' . $searchQuery . '%')
+				->orWhere('description', 'like', '%' . $searchQuery . '%');
+		})
+			->when($selectedTags, function ($query, $selectedTags) {
+				$query->whereHas('tags', function ($query) use ($selectedTags) {
+					$query->whereIn('tags.id', $selectedTags);
+				});
+			})
+			->orderBy('updated_at', 'DESC')
+			->get();
 
-		return view('blog.index', compact('posts', 'tags', 'selectedTags'))
-			->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+		$tags = Tag::all(); // Fetch all tags
+
+		return view('blog.index', compact('posts', 'tags', 'selectedTags', 'query'));
 	}
 
 	/**
@@ -167,7 +172,9 @@ class PostsController extends Controller
 		$query = $request->input('query');
 		$posts = $post->search($query)->paginate(10);
 
-		return view('blog.index', compact('posts'));
+		$tags = Tag::all();
+
+		return view('blog.index', compact('posts', 'tags'));
 	}
 
 }

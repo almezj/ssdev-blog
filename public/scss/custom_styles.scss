@@ -9,3 +9,12 @@
 	display: flex;
 	justify-content: center;
 }
+
+.post-tag {
+
+	&:hover {
+		background-color: #8c939a;
+		color: #ffffff;
+		transition: all 0.3s ease-in-out;
+	}
+}

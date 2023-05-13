@@ -4,18 +4,16 @@
 <div class="w-4/5 m-auto text-center">
     <div class="py-15 border-b border-gray-200">
         <h1 class="text-6xl">
-            Blog Posts
+            Blog
         </h1>
     </div>
 </div>
 <div class="filters">
-	<form action="{{ route('posts.search') }}" method="GET" class="search-bar my-4 text-center">
-		<input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2">
-		<button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2">Search</button>
-	</form>
-	<form action="{{ route('posts.index') }}" method="GET">
+	<form action="{{ route('posts.index') }}" method="GET" class="search-bar my-4 text-center">
+		<input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2 my-2">
+		
 		<div class="form-group">
-			<select name="tags[]" id="tags" class="form-control" multiple>
+			<select name="tags[]" id="tags" class="form-control my-2" multiple>
 				@foreach($tags as $tag)
 					<option value="{{ $tag->id }}" {{ in_array($tag->id, request('tags', [])) ? 'selected' : '' }}>
 						{{ $tag->name }}
@@ -23,7 +21,8 @@
 				@endforeach
 			</select>
 		</div>
-		<button type="submit" class="btn btn-primary">Apply Filters</button>
+		
+		<button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 my-2">Search and Apply Filters</button>
 	</form>
 </div>
 
@@ -50,8 +49,8 @@
     <div class="sm:grid grid-cols-2 gap-20 w-4/5 mx-auto py-15 border-b border-gray-200">
 		<div class="col-span-2">
 			@foreach ($post->tags as $tag)
-				<span class="bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 font-semibold">
-					<a href="{{ route('posts.tags', $tag->id) }}">{{ $tag->name }}</a>
+				<span class="post-tag bg-gray-200 rounded-full px-3 py-1 mx-1 text-sm text-gray-700 font-semibold">
+					<a class="pointer-events-none">{{ $tag->name }}</a>
 				</span>
 			@endforeach
 		</div>
