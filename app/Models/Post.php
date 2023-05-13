@@ -37,4 +37,9 @@ class Post extends Model
 	{
 		return $this->belongsToMany(Tag::class);
 	}
+
+	public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

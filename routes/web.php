@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,15 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Posts filtering
 Route::get('/posts/search', 'App\Http\Controllers\PostsController@search')->name('posts.search');
 Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
 
+//Favorite posts
+Route::post('/posts/{post}/favorite', [FavoriteController::class, 'addFavorite'])->name('posts.favorite');
+Route::delete('/posts/{post}/unfavorite', [FavoriteController::class, 'removeFavorite'])->name('posts.unfavorite');
+
+
+//Favorite posts page
+Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites');
 

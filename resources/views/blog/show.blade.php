@@ -1,11 +1,27 @@
 @extends('layouts.app') @section('content')
 <div>
-	<div class="w-4/5 m-auto pt-20">
-		<a href="{{ route('blog.index') }}" class="border-b-2 pb-2 border-dotted italic text-gray-500">
-			&larr; Back to Blog Posts
-		</a>
-	</div>
+    <div class="w-4/5 m-auto pt-20">
+        <a
+            href="{{ route('blog.index') }}"
+            class="border-b-2 pb-2 border-dotted italic text-gray-500"
+        >
+            &larr; Back to Blog Posts
+        </a>
+    </div>
 </div>
+@auth @if (Auth::user()->favorites->contains($post))
+<form action="{{ route('posts.unfavorite', $post) }}" method="POST">
+    @csrf @method('DELETE')
+    <button type="submit" class="unfavorite-button">
+        Remove from Favorites
+    </button>
+</form>
+@else
+<form action="{{ route('posts.favorite', $post) }}" method="POST">
+    @csrf
+    <button type="submit" class="favorite-button">Add to Favorites</button>
+</form>
+@endif @endauth
 <div class="w-4/5 m-auto text-left">
     <div class="py-15">
         <h1 class="text-6xl">
@@ -29,9 +45,9 @@
             @endforeach
         </div>
     </div>
-	<div class="post-body text-2xl">
-		{{ $post->description }}
-	</div>
+    <div class="post-body text-2xl">
+        {{ $post->description }}
+    </div>
 </div>
 
 <div class="w-4/5 m-auto mt-10">

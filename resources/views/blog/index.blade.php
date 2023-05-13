@@ -42,6 +42,9 @@
             class="bg-blue-500 uppercase bg-transparent text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl">
             Create post
         </a>
+		<a href="{{ route('favorites') }}" class="bg-blue-500 uppercase bg-transparent text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl">
+            Favorites
+        </a>
     </div>
 @endif
 
