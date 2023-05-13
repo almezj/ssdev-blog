@@ -33,6 +33,14 @@
 
 @foreach ($posts as $post)
     <div class="sm:grid grid-cols-2 gap-20 w-4/5 mx-auto py-15 border-b border-gray-200">
+		<div class="col-span-2">
+			@foreach ($post->tags as $tag)
+				<span class="bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700 font-semibold">
+					<a href="{{ route('posts.tags', $tag->id) }}">{{ $tag->name }}</a>
+				</span>
+			@endforeach
+		</div>
+
         <div>
             <img src="{{ asset('images/' . $post->image_path) }}" alt="">
         </div>

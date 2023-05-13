@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use App\Models\Tag;
 
 class PostsController extends Controller
 {
@@ -31,7 +32,9 @@ class PostsController extends Controller
 	 */
 	public function create()
 	{
-		return view('blog.create');
+		$tags = Tag::all();
+
+		return view('blog.create', compact('tags'));
 	}
 
 	/**
@@ -45,20 +48,24 @@ class PostsController extends Controller
 		$request->validate([
 			'title' => 'required',
 			'description' => 'required',
-			'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+			'image' => 'required|mimes:jpg,png,jpeg|max:5048',
+			'tags' => 'required|array'
 		]);
 
 		$newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
 
 		$request->image->move(public_path('images'), $newImageName);
 
-		Post::create([
+		$post = Post::create([
 			'title' => $request->input('title'),
 			'description' => $request->input('description'),
 			'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
 			'image_path' => $newImageName,
 			'user_id' => auth()->user()->id
 		]);
+
+		$tags = $request->input('tags', []);
+		$post->tags()->attach($tags);
 
 		return redirect('/blog')
 			->with('message', 'Your post has been added!');
@@ -84,7 +91,10 @@ class PostsController extends Controller
 	 */
 	public function edit($slug)
 	{
-		return view('blog.edit')
+
+		$tags = Tag::all();
+
+		return view('blog.edit', compact('tags'))
 			->with('post', Post::where('slug', $slug)->first());
 	}
 
@@ -142,4 +152,6 @@ class PostsController extends Controller
 
 		return view('blog.index', compact('posts'));
 	}
+
+
 }
