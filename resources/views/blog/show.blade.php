@@ -1,4 +1,11 @@
 @extends('layouts.app') @section('content')
+<div>
+	<div class="w-4/5 m-auto pt-20">
+		<a href="{{ route('blog.index') }}" class="border-b-2 pb-2 border-dotted italic text-gray-500">
+			&larr; Back to Blog Posts
+		</a>
+	</div>
+</div>
 <div class="w-4/5 m-auto text-left">
     <div class="py-15">
         <h1 class="text-6xl">
