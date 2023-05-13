@@ -14,6 +14,7 @@
     
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/custom_styles.min.css') }}" rel="stylesheet">
 </head>
 <body class="bg-primary h-screen antialiased leading-none font-sans">
     <div id="app">

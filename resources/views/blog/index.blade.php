@@ -8,6 +8,10 @@
         </h1>
     </div>
 </div>
+<form action="{{ route('posts.search') }}" method="GET" class="search-bar my-4 text-center">
+    <input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2">Search</button>
+</form>
 
 @if (session()->has('message'))
     <div class="w-4/5 m-auto mt-10 pl-2">
