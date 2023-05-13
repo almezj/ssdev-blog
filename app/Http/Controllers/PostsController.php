@@ -19,9 +19,20 @@ class PostsController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		return view('blog.index')
+
+		$tags = Tag::all();
+		$selectedTags = $request->input('tags', []);
+
+		// Retrieve posts filtered by selected tags
+		$posts = Post::when($selectedTags, function ($query) use ($selectedTags) {
+			$query->whereHas('tags', function ($query) use ($selectedTags) {
+				$query->whereIn('id', $selectedTags);
+			});
+		})->get();
+
+		return view('blog.index', compact('posts', 'tags', 'selectedTags'))
 			->with('posts', Post::orderBy('updated_at', 'DESC')->get());
 	}
 
@@ -110,7 +121,10 @@ class PostsController extends Controller
 		$request->validate([
 			'title' => 'required',
 			'description' => 'required',
+			'tags' => 'required|array'
 		]);
+
+		$post = Post::where('slug', $slug)->firstOrFail();
 
 		Post::where('slug', $slug)
 			->update([
@@ -119,6 +133,9 @@ class PostsController extends Controller
 				'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
 				'user_id' => auth()->user()->id
 			]);
+
+		$tags = $request->input('tags', []);
+		$post->tags()->sync($tags, false);
 
 		return redirect('/blog')
 			->with('message', 'Your post has been updated!');
@@ -152,6 +169,5 @@ class PostsController extends Controller
 
 		return view('blog.index', compact('posts'));
 	}
-
 
 }

@@ -8,10 +8,25 @@
         </h1>
     </div>
 </div>
-<form action="{{ route('posts.search') }}" method="GET" class="search-bar my-4 text-center">
-    <input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2">
-    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2">Search</button>
-</form>
+<div class="filters">
+	<form action="{{ route('posts.search') }}" method="GET" class="search-bar my-4 text-center">
+		<input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2">
+		<button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2">Search</button>
+	</form>
+	<form action="{{ route('posts.index') }}" method="GET">
+		<div class="form-group">
+			<select name="tags[]" id="tags" class="form-control" multiple>
+				@foreach($tags as $tag)
+					<option value="{{ $tag->id }}" {{ in_array($tag->id, request('tags', [])) ? 'selected' : '' }}>
+						{{ $tag->name }}
+					</option>
+				@endforeach
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Apply Filters</button>
+	</form>
+</div>
+
 
 @if (session()->has('message'))
     <div class="w-4/5 m-auto mt-10 pl-2">
@@ -91,3 +106,16 @@
 @endforeach
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
+
+<script>
+    $(document).ready(function() {
+        $('#tags').select2({
+			placeholder: "Choose tags",
+			allowClear: true
+		});
+    });
+</script>

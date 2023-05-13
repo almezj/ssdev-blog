@@ -41,11 +41,15 @@
 
 			<div class="form-group">
     <label for="tags">Tags</label>
-    <select name="tags[]" id="tags" class="form-control" multiple>
-        @foreach($tags as $tag)
-            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-        @endforeach
-    </select>
+    <div class="form-group">
+			<select name="tags[]" id="tags" class="form-control" multiple>
+				@foreach($tags as $tag)
+					<option value="{{ $tag->id }}" {{ in_array($tag->id, request('tags', [])) ? 'selected' : '' }}>
+						{{ $tag->name }}
+					</option>
+				@endforeach
+			</select>
+		</div>
 </div>
 
         <div class="bg-grey-lighter pt-15">
@@ -69,3 +73,16 @@
 </div>
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
+
+<script>
+    $(document).ready(function() {
+        $('#tags').select2({
+			placeholder: "Choose tags",
+			allowClear: true
+		});
+    });
+</script>

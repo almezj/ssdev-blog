@@ -25,5 +25,6 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 
 Route::get('/posts/search', 'App\Http\Controllers\PostsController@search')->name('posts.search');
 Route::get('/posts/tags/{tag}', [PostController::class, 'tags'])->name('posts.tags');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 

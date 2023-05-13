@@ -1,4 +1,9 @@
 .search-bar button {
   border-radius: 1rem;
   transition: all 0.3s ease-in-out;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
 }/*# sourceMappingURL=custom_styles.min.css.map */
