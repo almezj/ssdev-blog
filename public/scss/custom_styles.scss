@@ -18,3 +18,9 @@
 		transition: all 0.3s ease-in-out;
 	}
 }
+
+.post-img {
+	max-height: 100px;
+	max-width: 100px;
+	object-fit: cover;
+}
