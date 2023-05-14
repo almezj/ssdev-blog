@@ -2,9 +2,9 @@
 
 Our Tech blog is a simple blogging platform developed using Laravel. It allows users to create and manage blog posts, as well as add comments to the posts.
 
-Authors: Dillon Reilly, Josef Zemlicka
-Group: SD2b
-Due date: 14/05/2023
+**Authors**: Dillon Reilly, Josef Zemlicka <br>
+**Group**: SD2b <br>
+**Due date**: 14/05/2023 <br>
 
 ## Features
 
