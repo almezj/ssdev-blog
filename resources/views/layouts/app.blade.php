@@ -18,14 +18,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 </head>
-<body class="bg-primary h-screen antialiased leading-none font-sans">
+<body class="bg-white-100 h-screen antialiased leading-none font-sans">
     <div id="app">
-        <header class="bg-secondary py-6">
+        <header class="bg-primary py-6">
             <div class="container mx-auto flex justify-between items-center px-6">
                 <div>
-                    <a href="{{ url('/') }}" class="text-lg font-semibold text-text no-underline">
-                        {{ config('app.name', 'Everything Tech') }}
-                    </a>
+                    <a href="/" class="header__logo">{{ config('TechBlogs', 'TechBlogs') }}</a>
                 </div>
                 <nav class="space-x-4 text-text text-sm sm:text-base">
                     <a class="no-underline hover:underline text-text" href="/">Home</a>
