@@ -22,4 +22,25 @@ class CommentController extends Controller
 
 		return redirect()->back()->with('success', 'Comment added successfully.');
 	}
+
+	public function like(Request $request, $commentId)
+	{
+		$comment = Comment::findOrFail($commentId);
+
+		if ($comment->likes->contains('user_id', auth()->user()->id)) {
+			$comment->likes()->where('user_id', auth()->user()->id)->delete();
+			$isLiked = false;
+		} else {
+			$comment->likes()->create(['user_id' => auth()->user()->id]);
+			$isLiked = true;
+		}
+
+		$likesCount = $comment->likes()->count();
+
+		return response()->json([
+			'success' => true,
+			'isLiked' => $isLiked,
+			'likesCount' => $likesCount,
+		]);
+	}
 }
