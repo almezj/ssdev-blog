@@ -9,19 +9,6 @@
         </a>
     </div>
 </div>
-@auth @if (Auth::user()->favorites->contains($post))
-<form action="{{ route('posts.unfavorite', $post) }}" method="POST">
-    @csrf @method('DELETE')
-    <button type="submit" class="unfavorite-button">
-        Remove from Favorites
-    </button>
-</form>
-@else
-<form action="{{ route('posts.favorite', $post) }}" method="POST">
-    @csrf
-    <button type="submit" class="favorite-button">Add to Favorites</button>
-</form>
-@endif @endauth
 <div class="w-4/5 m-auto text-left">
     <div class="py-15">
         <h1 class="text-6xl">
@@ -43,6 +30,27 @@
                 <a class="pointer-events-none">{{ $tag->name }}</a>
             </span>
             @endforeach
+        </div>
+        <div class="mt-5">
+            @auth @if (Auth::user()->favorites->contains($post))
+            <form action="{{ route('posts.unfavorite', $post) }}" method="POST">
+                @csrf @method('DELETE')
+                <button type="submit" class="unfavorite-button">
+                    <span class="material-symbols-outlined star-filled">
+						star
+						</span>
+                </button>
+            </form>
+            @else
+            <form action="{{ route('posts.favorite', $post) }}" method="POST">
+                @csrf
+                <button type="submit" class="favorite-button">
+                    <span class="material-symbols-outlined">
+						star
+						</span>
+                </button>
+            </form>
+            @endif @endauth
         </div>
     </div>
     <div class="post-body text-2xl">

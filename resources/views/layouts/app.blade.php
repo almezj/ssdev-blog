@@ -15,6 +15,8 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/custom_styles.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	
 </head>
 <body class="bg-primary h-screen antialiased leading-none font-sans">
     <div id="app">
@@ -35,6 +37,9 @@
                         @endif
                     @else
                         <span class="text-text">{{ Auth::user()->name }}</span>
+						<a href="{{ route('favorites') }}" class="no-underline hover:underline text-text">
+            Favorites
+        </a>
 
                         <a href="{{ route('logout') }}"
                            class="no-underline hover:underline text-text"

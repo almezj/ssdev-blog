@@ -12,4 +12,35 @@
   background-color: #8c939a;
   color: #ffffff;
   transition: all 0.3s ease-in-out;
+}
+
+.post-img {
+  max-height: 100px;
+  max-width: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.blog a {
+  transition: all 0.3s ease-in-out;
+}
+.blog a:hover {
+  box-shadow: 0 0 20px rgba(20, 20, 255, 0.5);
+}
+
+.material-symbols-outlined {
+  font-size: 48px !important;
+  color: #d8a200;
+  transition: all 0.3s ease-in-out;
+}
+.material-symbols-outlined:hover {
+  color: #ffc927;
+}
+
+.star-filled {
+  font-variation-settings: "FILL" 1;
+  color: #ffc927;
+}
+.star-filled:hover {
+  color: #d8a200;
 }/*# sourceMappingURL=custom_styles.min.css.map */

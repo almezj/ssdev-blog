@@ -24,3 +24,34 @@
 	max-width: 100px;
 	object-fit: cover;
 }
+
+.blog {
+	a{
+		transition: all 0.3s ease-in-out;
+
+		&:hover {
+			box-shadow: 0 0 20px rgba(20, 20, 255, 0.5);
+		}
+	}
+}
+
+.material-symbols-outlined{
+	font-size: 48px !important;
+	color: #d8a200;
+	transition: all 0.3s ease-in-out;
+
+
+	&:hover{
+		color: #ffc927;
+	}
+}
+
+.star-filled{
+	font-variation-settings: 
+	"FILL" 1;
+	color: #ffc927;
+
+	&:hover{
+		color: #d8a200;
+	}
+}
