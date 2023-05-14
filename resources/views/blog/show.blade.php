@@ -110,6 +110,11 @@
             <span class="ml-4 text-gray-400 comment-likes"
                 >{{ $comment->likes->count() }} likes</span
             >
+			@auth
+                @if ($comment->user_id === auth()->user()->id)
+                    <button class="ml-2 text-red-500 font-medium delete-comment" data-comment-id="{{ $comment->id }}">Delete</button>
+                @endif
+            @endauth
             <button
                 class="ml-2 text-blue-500 font-medium like-button"
                 data-comment-id="{{ $comment->id }}"
@@ -149,6 +154,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+	//Like comment button
     $(document).on("click", ".like-button", function (e) {
         e.preventDefault();
         var commentId = $(this).data("comment-id");
@@ -175,6 +182,31 @@
                     if (likesCountElement.length) {
                         likesCountElement.text(response.likesCount + " likes");
                     }
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    });
+
+	//Delete comment button
+	$(document).on("click", ".delete-comment", function (e) {
+        e.preventDefault();
+        var commentId = $(this).data("comment-id");
+        var commentElement = $(this).closest("[data-comment-id='" + commentId + "']");
+
+        $.ajax({
+            type: "POST",
+            url: "/comments/" + commentId,
+            data: {
+				_method: "DELETE",
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (response) {
+                if (response.success) {
+                    commentElement.remove();
+					location.reload();
                 }
             },
             error: function (error) {

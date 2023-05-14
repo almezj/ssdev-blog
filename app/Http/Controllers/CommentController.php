@@ -43,4 +43,23 @@ class CommentController extends Controller
 			'likesCount' => $likesCount,
 		]);
 	}
+
+	public function destroy(Comment $comment)
+	{
+		// Check if the current user is the author of the comment (so the user cant delete other users comments, duh)
+		// Check if the current user is the author of the comment
+		if ($comment->user_id !== auth()->user()->id) {
+			return response()->json([
+				'success' => false,
+				'message' => 'You are not authorized to delete this comment.',
+			], 403);
+		}
+	
+		$comment->delete();
+	
+		return response()->json([
+			'success' => true,
+			'message' => 'Comment deleted successfully.',
+		]);
+	}
 }
