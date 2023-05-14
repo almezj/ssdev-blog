@@ -6,10 +6,11 @@
 <div class="w-4/5 m-auto text-center">
     <div class="py-15 border-b border-gray-200">
         <h1 class="text-6xl">
-            Blog
+            Search for a topic that intersts you...
         </h1>
     </div>
 </div>
+
 <div class="filters">
 	<form action="{{ route('posts.index') }}" method="GET" class="search-bar my-4 text-center">
 		<input type="text" name="query" placeholder="Search..." class="border-2 border-gray-300 rounded px-4 py-2 my-2">

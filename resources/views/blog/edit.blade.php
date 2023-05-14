@@ -1,6 +1,6 @@
 @extends('layouts.app') @section('content')
 <div class="w-4/5 m-auto text-left">
-    <div class="py-15">
+    <div class="py-15 border-b border-gray-300">
         <h1 class="text-6xl">Update Post</h1>
     </div>
 </div>

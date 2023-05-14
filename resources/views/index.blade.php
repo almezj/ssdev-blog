@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="sm:grid grid-cols-1 gap-20 w-4/5 mx-auto py-15 border-b border-text">
+    <div class="sm:grid grid-cols-1 gap-20 w-4/5 mx-auto py-15 border-b border-gray-300">
         <div>
             <img src="https://cdn.pixabay.com/photo/2014/05/03/01/03/laptop-336704_960_720.jpg" width="700" alt="">
         </div>
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="text-center p-15 bg-secondary text-text">
+    <div class="text-center p-15 border-b border-gray-300 text-text">
         <h2 class="text-2xl pb-5 text-l"> 
             Our members are experts in...
         </h2>
@@ -50,10 +50,6 @@
         <h2 class="text-4xl font-bold py-10 text-text">
             Recent Posts
         </h2>
-
-        <p class="m-auto w-4/5 text-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque exercitationem saepe enim veritatis, eos temporibus quaerat facere consectetur qui.
-        </p>
     </div>
 
     <div class="sm:grid grid-cols-1 w-4/5 m-auto">

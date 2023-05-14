@@ -1,15 +1,20 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: [
     './resources/views/**/*.blade.php',
     './resources/css/**/*.css',
   ],
   theme: {
-    extend: {
-      colors: {
-        'primary': '#FCFCFC',
-        'secondary': '#99E1D9',
-        'text': '#5D576B',
-      },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      blue: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+      emerald: colors.emerald,
+      indigo: colors.indigo,
+      yellow: colors.yellow,
     },
   },
   variants: {},
