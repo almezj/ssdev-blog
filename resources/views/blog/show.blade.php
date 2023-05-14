@@ -66,7 +66,7 @@
             href="{{ route('blog.show', $relatedPost->slug) }}"
             class="no-underline"
         >
-            <div class="rounded overflow-hidden shadow-lg flex-column">
+            <div class="rounded overflow-hidden shadow-lg flex-column post-card">
                 <div class="aspect-w-16 aspect-h-9">
                     <img
                         src="{{ asset('images/' . $relatedPost->image_path) }}"

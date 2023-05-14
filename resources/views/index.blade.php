@@ -85,7 +85,7 @@
             href="{{ route('blog.show', $post->slug) }}"
             class="no-underline"
         >
-            <div class="rounded overflow-hidden shadow-lg flex-column">
+            <div class="rounded overflow-hidden shadow-lg flex-column post-card">
                 <div class="aspect-w-16 aspect-h-9">
                     <img
                         src="{{ asset('images/' . $post->image_path) }}"
@@ -118,4 +118,9 @@
 		@endif
     </div>
     </div>
+	<div class="flex justify-center">
+		<a href="/blog" class="uppercase blog-btn bg-blue-500 hover:bg-blue-600 text-gray-100 text-lg font-extrabold mt-10 py-4 px-8 rounded-3xl">
+			Read More
+		</a>
+	</div>
 @endsection

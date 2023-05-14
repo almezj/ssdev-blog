@@ -21,10 +21,17 @@
      object-fit: cover;
 }
 
-.blog a {
+.post-card {
   transition: all 0.3s ease-in-out;
 }
-.blog a:hover {
+.post-card:hover {
+  box-shadow: 0 0 1px rgba(20, 20, 255, 0.5);
+}
+
+.blog-btn {
+  transition: all 0.3s ease-in-out;
+}
+.blog-btn:hover {
   box-shadow: 0 0 20px rgba(20, 20, 255, 0.5);
 }
 
