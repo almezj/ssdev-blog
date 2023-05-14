@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'AI Insights') }}</title>
+    <title>{{ config('app.name', 'Everything Tech') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,7 +16,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/custom_styles.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-	
+
 </head>
 <body class="bg-primary h-screen antialiased leading-none font-sans">
     <div id="app">
@@ -24,7 +24,7 @@
             <div class="container mx-auto flex justify-between items-center px-6">
                 <div>
                     <a href="{{ url('/') }}" class="text-lg font-semibold text-text no-underline">
-                        {{ config('app.name', 'AI Insights') }}
+                        {{ config('app.name', 'Everything Tech') }}
                     </a>
                 </div>
                 <nav class="space-x-4 text-text text-sm sm:text-base">

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,8 @@ Route::delete('/posts/{post}/unfavorite', [FavoriteController::class, 'removeFav
 
 //Favorite posts page
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites');
+
+//Post comments
+Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+
 

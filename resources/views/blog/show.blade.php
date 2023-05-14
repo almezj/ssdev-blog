@@ -98,5 +98,33 @@
         @endforeach
     </div>
 </div>
+<div class="comments-section mt-10">
+    <h2 class="text-3xl font-bold mb-5">Comments</h2>
+
+    @foreach ($post->comments as $comment)
+        <div class="comment">
+            <p>{{ $comment->content }}</p>
+            <div class="comment-info">
+                <span class="text-gray-600">{{ $comment->user->name }}</span>
+                <span class="text-gray-400">- {{ $comment->created_at->diffForHumans() }}</span>
+                <span class="text-gray-400">{{ $comment->likes->count() }} likes</span>
+            </div>
+        </div>
+    @endforeach
+
+    @auth
+        <div class="add-comment mt-5">
+            <form action="{{ route('comments.store', $post) }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <textarea name="content" class="form-control" placeholder="Add a comment" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    @else
+        <p class="mt-5"><a href="{{ route('login') }}">Login</a> to leave a comment.</p>
+    @endauth
+</div>
 
 @endsection
