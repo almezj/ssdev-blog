@@ -75,26 +75,47 @@
         </p>
     </div>
 
-    <div class="sm:grid grid-cols-2 w-4/5 m-auto">
-        <div class="flex bg-secondary text-text pt-10">
-            <div class="m-auto pt-4 pb-16 sm:m-auto w-4/5 block">
-		<span class="uppercase text-xs text-text">
-                    PHP
-                </span>
-
-                <h3 class="text-xl font-bold py-10 text-text">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas necessitatibus dolorum error culpa laboriosam. Enim voluptas earum repudiandae consequuntur ad? Expedita labore aspernatur facilis quasi ex? Nemo hic placeat et?
-                </h3>
-
-                <a 
-                    href=""
-                    class="uppercase bg-transparent border-2 border-text text-text text-xs font-extrabold py-3 px-5 rounded-3xl">
-                    Find Out More
-                </a>
+    <div class="sm:grid grid-cols-1 w-4/5 m-auto">
+	<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+		@if ($posts->isEmpty())
+			<p>No posts found.</p>
+		@else
+        @foreach ($posts as $post)
+        <a
+            href="{{ route('blog.show', $post->slug) }}"
+            class="no-underline"
+        >
+            <div class="rounded overflow-hidden shadow-lg flex-column">
+                <div class="aspect-w-16 aspect-h-9">
+                    <img
+                        src="{{ asset('images/' . $post->image_path) }}"
+                        alt=""
+                        class="object-cover post-img"
+                    />
+                </div>
+                <div class="flex-1">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">
+                            {{ $post->title }}
+                        </div>
+                        <p class="text-gray-700 text-base">
+                            {{ $post->description }}
+                        </p>
+                    </div>
+                    <div class="px-6 pt-4 pb-2">
+                        @foreach ($post->tags as $tag)
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                        >
+                            {{ $tag->name }}
+                        </span>
+                        @endforeach
+                    </div>
+                </div>
             </div>
-        </div>
-        <div>
-            <img src="https://cdn.pixabay.com/photo/2014/05/03/01/03/laptop-336704_960_720.jpg" alt="">
-        </div>
+        </a>
+        @endforeach
+		@endif
+    </div>
     </div>
 @endsection
