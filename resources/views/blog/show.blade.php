@@ -98,22 +98,20 @@
         @endforeach
     </div>
 </div>
-<div class="comments-section mt-10">
+<div class="comments-section w-4/5 m-auto mt-10">
     <h2 class="text-3xl font-bold mb-5">Comments</h2>
 
     @foreach ($post->comments as $comment)
-    <div class="comment">
-        <p>{{ $comment->content }}</p>
-        <div class="comment-info">
-            <span class="text-gray-600">{{ $comment->user->name }}</span>
-            <span class="text-gray-400"
-                >- {{ $comment->created_at->diffForHumans() }}</span
-            >
-            <span class="text-gray-400 comment-likes"
+    <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+        <p class="text-gray-800">{{ $comment->content }}</p>
+        <div class="flex items-center mt-2 text-sm text-gray-600">
+            <span class="mr-2">{{ $comment->user->name }}</span>
+            <span>- {{ $comment->created_at->diffForHumans() }}</span>
+            <span class="ml-4 text-gray-400 comment-likes"
                 >{{ $comment->likes->count() }} likes</span
             >
             <button
-                class="like-button"
+                class="ml-2 text-blue-500 font-medium like-button"
                 data-comment-id="{{ $comment->id }}"
                 data-is-liked="{{ $comment->likes->contains('user_id', auth()->user()->id) ? 'true' : 'false' }}"
             >
@@ -125,20 +123,26 @@
     <div class="add-comment mt-5">
         <form action="{{ route('comments.store', $post) }}" method="POST">
             @csrf
-            <div class="form-group">
+            <div class="mb-2">
                 <textarea
                     name="content"
-                    class="form-control"
+                    class="w-full rounded-lg shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     placeholder="Add a comment"
                     rows="3"
                 ></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+                type="submit"
+                class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition duration-300"
+            >
+                Submit
+            </button>
         </form>
     </div>
     @else
     <p class="mt-5">
-        <a href="{{ route('login') }}">Login</a> to leave a comment.
+        <a href="{{ route('login') }}" class="text-indigo-500">Login</a> to
+        leave a comment.
     </p>
     @endauth
 </div>
@@ -167,7 +171,7 @@
                     likeButton.data("is-liked", response.isLiked);
 
                     // Update the like count in the DOM (THIS TOOK WAY TOO LONG TO IMPLEMENT)
-                    var likesCountElement = likeButton.closest('.comment-info').find('.comment-likes');
+                    var likesCountElement = likeButton.siblings(".comment-likes");
                     if (likesCountElement.length) {
                         likesCountElement.text(response.likesCount + " likes");
                     }
