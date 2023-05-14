@@ -37,17 +37,15 @@
                 @csrf @method('DELETE')
                 <button type="submit" class="unfavorite-button">
                     <span class="material-symbols-outlined star-filled">
-						star
-						</span>
+                        star
+                    </span>
                 </button>
             </form>
             @else
             <form action="{{ route('posts.favorite', $post) }}" method="POST">
                 @csrf
                 <button type="submit" class="favorite-button">
-                    <span class="material-symbols-outlined">
-						star
-						</span>
+                    <span class="material-symbols-outlined"> star </span>
                 </button>
             </form>
             @endif @endauth
@@ -66,7 +64,9 @@
             href="{{ route('blog.show', $relatedPost->slug) }}"
             class="no-underline"
         >
-            <div class="rounded overflow-hidden shadow-lg flex-column post-card">
+            <div
+                class="rounded overflow-hidden shadow-lg flex-column post-card"
+            >
                 <div class="aspect-w-16 aspect-h-9">
                     <img
                         src="{{ asset('images/' . $relatedPost->image_path) }}"
@@ -98,33 +98,121 @@
         @endforeach
     </div>
 </div>
-<div class="comments-section mt-10">
+<div class="comments-section w-4/5 m-auto mt-10">
     <h2 class="text-3xl font-bold mb-5">Comments</h2>
 
     @foreach ($post->comments as $comment)
-        <div class="comment">
-            <p>{{ $comment->content }}</p>
-            <div class="comment-info">
-                <span class="text-gray-600">{{ $comment->user->name }}</span>
-                <span class="text-gray-400">- {{ $comment->created_at->diffForHumans() }}</span>
-                <span class="text-gray-400">{{ $comment->likes->count() }} likes</span>
+    <div class="bg-white rounded-lg shadow-md p-4 mb-4">
+        <p class="text-gray-800">{{ $comment->content }}</p>
+        <div class="flex items-center mt-2 text-sm text-gray-600">
+            <span class="mr-2">{{ $comment->user->name }}</span>
+            <span>- {{ $comment->created_at->diffForHumans() }}</span>
+            <span class="ml-4 text-gray-400 comment-likes"
+                >{{ $comment->likes->count() }} likes</span
+            >
+			@auth
+                @if ($comment->user_id === auth()->user()->id)
+                    <button class="ml-2 text-red-500 font-medium delete-comment" data-comment-id="{{ $comment->id }}">Delete</button>
+                @endif
+            @endauth
+            <button
+                class="ml-2 text-blue-500 font-medium like-button"
+                data-comment-id="{{ $comment->id }}"
+                data-is-liked="{{ $comment->likes->contains('user_id', auth()->user()->id) ? 'true' : 'false' }}"
+            >
+                {{ $comment->likes->contains('user_id', auth()->user()->id) ? 'Remove Like' : 'Like' }}
+            </button>
+        </div>
+    </div>
+    @endforeach @auth
+    <div class="add-comment mt-5">
+        <form action="{{ route('comments.store', $post) }}" method="POST">
+            @csrf
+            <div class="mb-2">
+                <textarea
+                    name="content"
+                    class="w-full rounded-lg shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    placeholder="Add a comment"
+                    rows="3"
+                ></textarea>
             </div>
-        </div>
-    @endforeach
-
-    @auth
-        <div class="add-comment mt-5">
-            <form action="{{ route('comments.store', $post) }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <textarea name="content" class="form-control" placeholder="Add a comment" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
+            <button
+                type="submit"
+                class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition duration-300"
+            >
+                Submit
+            </button>
+        </form>
+    </div>
     @else
-        <p class="mt-5"><a href="{{ route('login') }}">Login</a> to leave a comment.</p>
+    <p class="mt-5">
+        <a href="{{ route('login') }}" class="text-indigo-500">Login</a> to
+        leave a comment.
+    </p>
     @endauth
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+	//Like comment button
+    $(document).on("click", ".like-button", function (e) {
+        e.preventDefault();
+        var commentId = $(this).data("comment-id");
+        var likeButton = $(this);
+        var isLiked = $(this).data("is-liked") === "true";
+
+        $.ajax({
+            type: "POST",
+            url: "/comments/" + commentId + "/like",
+            data: {
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (response) {
+                if (response.success) {
+                    if (response.isLiked) {
+                        likeButton.text("Remove Like");
+                    } else {
+                        likeButton.text("Like");
+                    }
+                    likeButton.data("is-liked", response.isLiked);
+
+                    // Update the like count in the DOM (THIS TOOK WAY TOO LONG TO IMPLEMENT)
+                    var likesCountElement = likeButton.siblings(".comment-likes");
+                    if (likesCountElement.length) {
+                        likesCountElement.text(response.likesCount + " likes");
+                    }
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    });
+
+	//Delete comment button
+	$(document).on("click", ".delete-comment", function (e) {
+        e.preventDefault();
+        var commentId = $(this).data("comment-id");
+        var commentElement = $(this).closest("[data-comment-id='" + commentId + "']");
+
+        $.ajax({
+            type: "POST",
+            url: "/comments/" + commentId,
+            data: {
+				_method: "DELETE",
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (response) {
+                if (response.success) {
+                    commentElement.remove();
+					location.reload();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    });
+</script>
 @endsection

@@ -39,5 +39,7 @@ Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites'
 
 //Post comments
 Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 

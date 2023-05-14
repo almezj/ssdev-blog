@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['content', 'user_id', 'post_id'];
+    protected $fillable = ['content', 'user_id', 'post_id', 'likes'];
+	protected $casts = [
+		'likes_count' => 'integer',
+	];
 
     public function user()
     {
