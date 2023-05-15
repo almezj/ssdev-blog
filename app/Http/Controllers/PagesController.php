@@ -7,9 +7,9 @@ use App\Models\Post;
 
 class PagesController extends Controller
 {
-    public function index()
-    {
+	public function index()
+	{
 		$posts = Post::orderBy('updated_at', 'DESC')->get()->take(4);
-        return view('index', compact('posts'));
-    }
+		return view('index', compact('posts'));
+	}
 }

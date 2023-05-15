@@ -7,24 +7,24 @@ use App\Models\Post;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
-    /**
-     * Show the application dashboard.
-     *
-     */
-    public function index()
-    {
+	/**
+	 * Show the application dashboard.
+	 *
+	 */
+	public function index()
+	{
 		$posts = Post::orderBy('updated_at', 'DESC')->get();
 
-        return view('index', compact('posts'));
-    }
+		return view('index', compact('posts'));
+	}
 }

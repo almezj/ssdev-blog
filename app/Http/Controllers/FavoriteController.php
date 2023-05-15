@@ -7,28 +7,28 @@ use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
-    public function addFavorite(Post $post)
-    {
-        // Logic to add the post to favorites for the authenticated user
-        auth()->user()->favorites()->attach($post->id);
+	public function addFavorite(Post $post)
+	{
+		// Logic to add the post to favorites for the authenticated user
+		auth()->user()->favorites()->attach($post->id);
 
-        return redirect()->back();
-    }
+		return redirect()->back();
+	}
 
-    public function removeFavorite(Post $post)
-    {
-        // Logic to remove the post from favorites for the authenticated user
-        auth()->user()->favorites()->detach($post->id);
+	public function removeFavorite(Post $post)
+	{
+		// Logic to remove the post from favorites for the authenticated user
+		auth()->user()->favorites()->detach($post->id);
 
-        return redirect()->back();
-    }
+		return redirect()->back();
+	}
 
 	public function index()
-    {
-       
-        $user = auth()->user();
-        $favoritedPosts = $user->favorites()->get();
+	{
 
-        return view('favorites.index', compact('favoritedPosts'));
-    }
+		$user = auth()->user();
+		$favoritedPosts = $user->favorites()->get();
+
+		return view('favorites.index', compact('favoritedPosts'));
+	}
 }

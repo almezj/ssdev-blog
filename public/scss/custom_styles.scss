@@ -25,11 +25,11 @@
 }
 
 .post-card {
-	transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
-	&:hover {
-		box-shadow: 0 0 1px rgba(20, 20, 255, 0.5);
-	}
+    &:hover {
+        box-shadow: 0 0 1px rgba(20, 20, 255, 0.5);
+    }
 }
 
 .blog-btn {

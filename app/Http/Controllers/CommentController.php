@@ -54,9 +54,9 @@ class CommentController extends Controller
 				'message' => 'You are not authorized to delete this comment.',
 			], 403);
 		}
-	
+
 		$comment->delete();
-	
+
 		return response()->json([
 			'success' => true,
 			'message' => 'Comment deleted successfully.',
